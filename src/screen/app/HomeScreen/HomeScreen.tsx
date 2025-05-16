@@ -1,10 +1,10 @@
 import React from "react"
 
 import { Button } from '../../../components/Button/Button';
-import { Text } from '../../../components/Text/Text';
+//import { Text } from '../../../components/Text/Text';
 import { Screen } from '../../../components/Screen/Screen';
 
-//mport {  Text } from '@components';
+import {  Text } from '@components';
 import { AppTabScreenProps } from "../../../routes/navigationType";
 
 
