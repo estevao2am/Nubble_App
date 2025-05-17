@@ -205,3 +205,23 @@ export function LoginScreen({navigation}: ScreenProps) {
 }
 
 Husky permit do security commits
+
+
+first way chamada api 
+
+
+export function HomeScreen({navigation}:AppTabScreenProps<'HomeScreen'>){
+// chamada da api
+const [postList, setPostList] = useState<Post[]>([]);
+useEffect(()=>{
+    postService.getList().then(list=> setPostList(list));
+},[])
+
+    return (
+        <Screen>
+            
+            {postList.map(post=> (<Text>{post.text}</Text>))}
+
+            </Screen>
+    )
+}
