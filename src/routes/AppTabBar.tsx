@@ -14,7 +14,7 @@ import { $shadowProps } from "../theme/theme";
 export function AppTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const {bottom} = useAppSafeArea() // contem as configuracao de posicao de baixo e cima do IOS e android 
     return (
-      <Box flexDirection="row" paddingTop="s12" backgroundColor="background" style={[{paddingBottom:bottom}, $shadowProps]}>
+      <Box flexDirection="row" paddingTop="s12" backgroundColor="carrotSecondary" style={[{paddingBottom:bottom}, $shadowProps]}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
   

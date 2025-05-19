@@ -11,7 +11,8 @@ export function PostImage({imageURL}:Props) {
         <Image
                  source={{uri:imageURL}}
                  resizeMode='cover'
-                 style={{width:Dimensions.get('screen').width, height:300}}
+                 style={{width:Dimensions.get('screen').width, height:300,marginHorizontal:-24}}
              />
     )
-}
+}// marginHorizontal:-24 para ficar alinhado com o padding do Box
+//  o padding do Box é de 24, então para ficar alinhado com a tela, precisamos colocar -24

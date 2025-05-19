@@ -3,6 +3,7 @@ import { Post } from '../../domain/Post/types';
 import { PostHeader } from "./components/PostHeader";
 import { PostImage } from "./components/PostImage";
 import { PostActions } from "./components/PostActions";
+import { PostBottom } from "./components/PostBottom";
 
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 export function PostItem({post}:Props) {
     return(
-        <Box marginBottom='s24'>
+        <Box paddingHorizontal="s24" marginBottom='s24'>
             <PostHeader author={post.author}/>
             <PostImage imageURL={post.imageURL}/>
             <PostActions
@@ -19,6 +20,12 @@ export function PostItem({post}:Props) {
         favoriteCount={post.favoriteCount}
         reactionCount={post.reactionCount}
       />
+      <PostBottom   
+        author={post.author}
+        text={post.text}
+        commentCount={post.commentCount}
+      />
+      
          </Box>
          )
        }
