@@ -23,13 +23,25 @@ export const palette = {
 export const theme = createTheme({
     colors: {
       ...palette,
+      //light Mode
       primary: palette.greenPrimary,
+      
+// Dark mode
+     // primary: palette.carrotSecondary,
+
       primaryContrast: palette.grayWhite,
+
   
       buttonPrimary: palette.greenPrimary,
   
-      background: palette.grayWhite,
+      //Light mode usage example
+     background: palette.grayWhite,
       backgroundContrast: palette.grayBlack,
+
+// Dark mode usage example
+ //background: palette.grayBlack,
+     // backgroundContrast: palette.grayWhite,
+
   
       error: palette.redError,
       errorLight: palette.redErrorLight,

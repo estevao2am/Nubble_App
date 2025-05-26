@@ -8,6 +8,7 @@ import {Post} from '../../../domain/Post/types';
 import {postService} from '../../../domain/Post/postService';
 import {  FlatList, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
 import { PostItem } from '../../../components/PostItem/PostItem';
+import { HomeHeader } from './components/HomeHeader';
 
 export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   // chamada da api
@@ -21,12 +22,13 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   }
    
   return (
-  <Screen style={$screen}>  {/*  paddingBottom:0 para evitar o padding do bottom tab bar */}
+  <Screen style={$screen}>  
     <FlatList 
     showsVerticalScrollIndicator={false}
         data={postList}
+                keyExtractor={item => item.id}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        ListHeaderComponent={<HomeHeader/>}
     />
 
   </Screen>

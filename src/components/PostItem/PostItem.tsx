@@ -1,6 +1,6 @@
-import { Box } from "../Box/Box"
+import { Box } from '../Box/Box'
 import { Post } from '../../domain/Post/types';
-import { PostHeader } from "./components/PostHeader";
+import { PostHeader } from './components/PostHeader'
 import { PostImage } from "./components/PostImage";
 import { PostActions } from "./components/PostActions";
 import { PostBottom } from "./components/PostBottom";
@@ -20,14 +20,10 @@ export function PostItem({post}:Props) {
         favoriteCount={post.favoriteCount}
         reactionCount={post.reactionCount}
       />
-      <PostBottom   
+      <PostBottom
         author={post.author}
         text={post.text}
         commentCount={post.commentCount}
-      />
-      
+      />  
          </Box>
-         )
-       }
-     
-    
+      )}

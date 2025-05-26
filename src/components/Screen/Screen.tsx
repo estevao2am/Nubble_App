@@ -2,8 +2,8 @@ import React from 'react';
 import {Box, BoxProps, TouchableOpacityBox} from '../Box/Box';
 import {useAppSafeArea} from '../hooks/useAppSafeArea';
 import {Icon} from '../../components/Icon/Icon';
-//import {Text} from '../Text/Text';
-import {Text} from '@components';
+import {Text} from '../Text/Text';
+//import {Text} from '@components';
 import { ScrollViewContainer, ViewContainer } from '../../screen/components/ScreenContainer';
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useAppTheme } from '../hooks/useAppTheme';
@@ -37,7 +37,7 @@ const navigation = useNavigation()
     <Container backgroundColor={colors.background}>
     <Box 
     paddingHorizontal='s24'
-    style={[{padding: top,paddingBottom:bottom},style]} {...boxProps}> {/*  fazendo um marger mara rescrever as propriedades default  */}
+    style={[{padding: top,paddingBottom:bottom},style]} {...boxProps}> 
       {canGoBack && (
         <TouchableOpacityBox 
         onPress={navigation.goBack}

@@ -20,7 +20,7 @@ export function AppStack (){
         <Stack.Navigator
             screenOptions={{
                 headerShown:false,
-                fullScreenGestureEnabled:true // funcionalidade de foltar com dedo
+                fullScreenGestureEnabled:true // funcionalidade de voltar com dedo
             }}
             initialRouteName="AppTabNavigator"
         >
