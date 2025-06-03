@@ -1,5 +1,5 @@
 import {Text} from '../../../components/Text/Text';
-import {Post} from '../../..//domain/Post/types';
+import {Post} from '../../../domain/Post/postTypes';
 import {Box} from '../../../components/Box/Box';
 
 type Props = Pick<Post, 'author' | 'text' | 'commentCount'>;

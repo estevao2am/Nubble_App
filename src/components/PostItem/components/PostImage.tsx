@@ -1,5 +1,5 @@
 import { Dimensions, Image } from "react-native";
-import { Post } from "../../../domain/Post/types";
+import { Post } from "../../../domain/Post/postTypes";
 
 
 type Props = Pick<Post, 'imageURL'>

@@ -1,7 +1,7 @@
 import { Box } from "../../../components/Box/Box";
 import { Text } from "../../..//components/Text/Text";
 import { Image } from "react-native";
-import { Post } from "../../../domain/Post/types";
+import { Post } from "../../../domain/Post/postTypes";
 
 
 type Props = Pick<Post, 'author'>; // extrair apenas os dados do usuario

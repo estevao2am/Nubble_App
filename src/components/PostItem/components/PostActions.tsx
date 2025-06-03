@@ -2,7 +2,7 @@ import {Text} from '../../../components/Text/Text';
 import {IconProps} from '../../..//components/Icon/Icon';
 import {Box, TouchableOpacityBox} from '../../../components/Box/Box';
 import {Icon} from '../../Icon/Icon';
-import {Post} from '../../../domain/Post/types';
+import {Post} from '../../../domain/Post/postTypes';
 
 type Props = Pick<Post, 'reactionCount' | 'commentCount' | 'favoriteCount'>;
 

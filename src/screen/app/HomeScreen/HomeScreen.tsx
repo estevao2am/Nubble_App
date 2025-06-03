@@ -1,22 +1,25 @@
-import React, {useEffect, useState} from 'react';
 
 import {Screen} from '../../../components/Screen/Screen';
 
 //import {  Text } from '@components';
 import {AppTabScreenProps} from '../../../routes/navigationType';
-import {Post} from '../../../domain/Post/types';
-import {postService} from '../../../domain/Post/postService';
-import {  FlatList, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
+import {Post} from '../../../domain/Post/postTypes';
+import {  FlatList, ListRenderItemInfo, RefreshControl, StyleProp, ViewStyle } from 'react-native';
 import { PostItem } from '../../../components/PostItem/PostItem';
 import { HomeHeader } from './components/HomeHeader';
+import { HomeEmpty } from './components/HomeEmpty';
+import { usePostList } from '../../../domain/Post/useCases/usePostList';
+import React from 'react';
+import { useScrollToTop } from '@react-navigation/native';
 
 export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
-  // chamada da api
-  const [postList, setPostList] = useState<Post[]>([]);
-  useEffect(() => {
-    postService.getList().then(list => setPostList(list));
-  }, []);
+ 
+const {list:postList,error,loading,refresh,fetchNextPage} = usePostList()
 
+// go to top function after must be used in the flatList area
+const flatListRef = React.useRef<FlatList<Post>>(null)
+useScrollToTop(flatListRef)
+ 
   function renderItem({item}:ListRenderItemInfo<Post>){
     return <PostItem post={item}/>
   }
@@ -24,11 +27,20 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   return (
   <Screen style={$screen}>  
     <FlatList 
+    ref={flatListRef} // permite retonar no inicio quando é clicado no icon home
     showsVerticalScrollIndicator={false}
-        data={postList}
-                keyExtractor={item => item.id}
+       data={postList}
+              //data={[]}
+
+        keyExtractor={item => item.id}
         renderItem={renderItem}
+        onEndReached={fetchNextPage} // função que é chamada quando chegar no limite da pagina
+        onEndReachedThreshold={0.5}// percemtagem do scrool
+        contentContainerStyle={{flex: postList.length === 0 ? 1: undefined}}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh}/> }
+        refreshing={loading}
         ListHeaderComponent={<HomeHeader/>}
+        ListEmptyComponent={<HomeEmpty refetch={refresh} error={error} loading={loading}/>}
     />
 
   </Screen>
@@ -38,5 +50,6 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
 const $screen:StyleProp<ViewStyle>={
   paddingHorizontal:0,
   paddingBottom:0,
-  paddingTop:0
+  paddingTop:0,
+  flex:1
 }

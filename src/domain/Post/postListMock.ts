@@ -1,4 +1,4 @@
-import {Post} from './types';
+import {Post} from './postTypes';
 
 // Mock => dados simulados
 // Tipando com os tipos declarados em post types para garantir a srguranca
