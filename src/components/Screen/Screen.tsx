@@ -12,11 +12,12 @@ import { useNavigation } from '@react-navigation/native';
 interface ScreenProps extends BoxProps {
   children: React.ReactNode;
   canGoBack?: boolean;
-  scrollable?:boolean
+  scrollable?:boolean;
+  tile?: string
 }
 
 export function Screen({
-  children, 
+  children,
   canGoBack = false,
   scrollable = false,
   style, // pegando o style do BoxProps para utilizar rescrever algumas propriedades
@@ -30,7 +31,7 @@ const Container = scrollable ? ScrollViewContainer : ViewContainer;
 const navigation = useNavigation()
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
     behavior={Platform.OS ==='ios' ? 'padding': undefined}
     style={{flex:1}}
     >
