@@ -1,5 +1,5 @@
 import { Button } from "../../../components/Button/Button";
-import { Screen } from "../../../components/Screen/Screen";
+import { Screen } from "../../Screen";
 import { Text } from "../../../components/Text/Text";
 import { useResetNavigationSuccess } from "../../../components/hooks/useResetNavigationSuccess";
 import { ForgotPasswordSchema, forgotPasswordSchema } from "./forgotPasswordSchema";

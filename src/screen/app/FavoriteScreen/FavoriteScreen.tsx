@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Text } from '../../../components/Text/Text';
-import {  Screen,  } from '../../../components/Screen/Screen';
+import {  Screen,  } from '../../Screen';
 import { AppTabScreenProps } from "../../../routes/navigationType";
 
 

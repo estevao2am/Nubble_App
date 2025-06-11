@@ -1,5 +1,5 @@
 
-import {Screen} from '../../../components/Screen/Screen';
+import {Screen} from '../../Screen';
 
 //import {  Text } from '@components';
 import {AppTabScreenProps} from '../../../routes/navigationType';
@@ -32,14 +32,15 @@ useScrollToTop(flatListRef)
        data={postList}
               //data={[]}
 
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
         onEndReached={fetchNextPage} // função que é chamada quando chegar no limite da pagina
         onEndReachedThreshold={0.5}// percemtagem do scrool
-        contentContainerStyle={{flex: postList.length === 0 ? 1: undefined}}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh}/> }
+        contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
         refreshing={loading}
         ListHeaderComponent={<HomeHeader/>}
+                refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh}/> }
+
         ListEmptyComponent={<HomeEmpty refetch={refresh} error={error} loading={loading}/>}
     />
 

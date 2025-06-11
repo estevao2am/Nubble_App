@@ -5,6 +5,7 @@ export interface PostComment {
     id:number
     message:string
     createdAt:string,
+    createdAtRelative:string,
     author:{
       id: number//1
         profileURL:string,

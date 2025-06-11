@@ -1,26 +1,25 @@
 import React from 'react';
-import {Box, BoxProps, TouchableOpacityBox} from '../Box/Box';
-import {useAppSafeArea} from '../hooks/useAppSafeArea';
-import {Icon} from '../../components/Icon/Icon';
-import {Text} from '../Text/Text';
+import {Box, BoxProps} from '../components/Box/Box';
+import {useAppSafeArea} from '../components/hooks/useAppSafeArea';
 //import {Text} from '@components';
-import { ScrollViewContainer, ViewContainer } from '../../screen/components/ScreenContainer';
+import { ScrollViewContainer, ViewContainer } from './components/ScreenContainer';
 import { KeyboardAvoidingView, Platform } from 'react-native';
-import { useAppTheme } from '../hooks/useAppTheme';
+import { useAppTheme } from '../components/hooks/useAppTheme';
 import { useNavigation } from '@react-navigation/native';
+import { ScreenHeader } from './components/ScreenHeader';
 
-interface ScreenProps extends BoxProps {
+export interface ScreenProps extends BoxProps {
   children: React.ReactNode;
   canGoBack?: boolean;
   scrollable?:boolean;
-  tile?: string
+  title?: string;
 }
 
 export function Screen({
   children,
   canGoBack = false,
   scrollable = false,
-  style, // pegando o style do BoxProps para utilizar rescrever algumas propriedades
+  style,title, // pegando o style do BoxProps para utilizar rescrever algumas propriedades
   //style={{paddingBottom:0}} // para evitar o padding do bottom tab bar
 ...boxProps
 }: ScreenProps) {
@@ -39,18 +38,8 @@ const navigation = useNavigation()
     <Box 
     paddingHorizontal='s24'
     style={[{padding: top,paddingBottom:bottom},style]} {...boxProps}> 
-      {canGoBack && (
-        <TouchableOpacityBox 
-        onPress={navigation.goBack}
-        marginBottom="s24" flexDirection="row">
-          <Icon name="arrowLeft" color="primary" />
-          <Text preset="paragraphMedium" semiBold ml="s8">
-            Voltar
-          </Text>
-        </TouchableOpacityBox>
-        
-      )}
-
+   
+      <ScreenHeader canGoBack={canGoBack} title={title}/>
       {children}
     </Box>
     </Container>

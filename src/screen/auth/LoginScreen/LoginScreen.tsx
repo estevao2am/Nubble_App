@@ -1,6 +1,6 @@
 import {Button} from '../../../components/Button/Button';
 import {Text} from '../../../components/Text/Text';
-import {Screen} from '../../../components/Screen/Screen';
+import {Screen} from '../../Screen';
 import {useForm} from 'react-hook-form'
 import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';

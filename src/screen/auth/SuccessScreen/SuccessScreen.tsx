@@ -1,6 +1,6 @@
 import { Icon } from "../../../components/Icon/Icon";
 import { Button } from "../../../components/Button/Button";
-import { Screen } from "../../../components/Screen/Screen";
+import { Screen } from "../../Screen";
 import { Text } from "../../../components/Text/Text";
 import { AuthScreenProps } from "../../../routes/navigationType";
 

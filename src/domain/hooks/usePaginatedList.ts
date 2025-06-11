@@ -3,7 +3,7 @@ import { Page } from "../../types/Pages";
 
 
 
-
+ 
 export function usePaginatedList <Data>(getList:(page:number)=> Promise<Page<Data>>) {
 
      const [list, setList] = useState<Data[]>([]);
@@ -66,7 +66,8 @@ async function fetchNextPage(){
             loading,
             error,
             refresh:fetchInitialData,
-            fetchNextPage
+            fetchNextPage,
+            hasNextPage  // verificar se há outra pagina
         }
 
 }

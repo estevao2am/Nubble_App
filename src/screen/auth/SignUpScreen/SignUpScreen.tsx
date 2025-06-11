@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {Screen} from '../../../components/Screen/Screen';
+import {Screen} from '../../Screen';
 import {Text} from '../../../components/Text/Text';
 import { Button } from '../../../components/Button/Button';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
