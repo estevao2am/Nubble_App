@@ -7,6 +7,7 @@ import { AuthStack } from './AuthStack';
 
 export function Router() {
   const authenticated = true;
+  console.log(authenticated)
 
   return (
     <NavigationContainer>

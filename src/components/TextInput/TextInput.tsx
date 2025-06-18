@@ -74,7 +74,8 @@ export function TextInput({
   );
 }
 
-const $textInputStyle: TextStyle = {
+// Propriendades que resetan as configuracoes padroes no android, ele vem com um iput padrao
+export const $textInputStyle: TextStyle = {
  // borderWidth: 1,
   flexGrow: 1,
   flexShrink: 1,
