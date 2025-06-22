@@ -10,7 +10,8 @@ function toPost(postApi:PostAPI):Post {
         author:{
             profileURL:postApi.user.profile_url,
             name:postApi.user.full_name,
-            userName:postApi.user.username
+            userName:postApi.user.username,
+            id:postApi.user.id
         },
         imageURL:postApi.image_url,
         reactionCount:parseInt(postApi.meta.like_count,10),

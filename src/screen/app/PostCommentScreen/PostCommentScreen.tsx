@@ -8,14 +8,20 @@ import { PostComentBottom } from './components/PostComentBottom'
 import { useAppSafeArea } from '../../../components/hooks/useAppSafeArea'
 import { Box } from '../../../components/Box/Box'
 import { PostCommentTextMessage } from './components/PostCommentTextMessage'
+import { useUser } from '../../../domain/Auth/hooks/useUser';
 
 export function PostCommentScreen ({route}:AppScreenProps<'PostCommentScreen'>){
+
 const postId = route.params.postId; // eu recebo este id la na definicao do meu routes ,como paramenr´trp
 const {list,fetchNextPage,hasNextPage,refresh} = usePostCommentList(postId)
+
+const {id} = useUser()
+const postAuthorId = route.params.postAuthorId
+
 const {bottom} = useAppSafeArea()
  function renderItem({item}:ListRenderItemInfo<PostComment>){
     return (
-    <PostCommentItem postComment={item}/>
+    <PostCommentItem postComment={item} onRemoveComment={refresh} userId={id} postAuthorId={postAuthorId}/>
     ) 
     }
 
@@ -38,6 +44,8 @@ const {bottom} = useAppSafeArea()
             />
             <PostCommentTextMessage postId={postId} onAddComment={refresh}/>
                 </Box>
-        </Screen>
+        </Screen> 
     )
 }
+// onAddComment atualizar os comentarios assim que forem adicionados em tempo real, dando um refresh
+// onRemoveComment permite dar o refresh

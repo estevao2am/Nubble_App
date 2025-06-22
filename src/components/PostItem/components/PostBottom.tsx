@@ -10,7 +10,7 @@ const navigation = useNavigation()
 
   const commentText = getCommentText(commentCount);
 function navigateToPostCommentScreen(){
-  navigation.navigate('PostCommentScreen',{ postId:id})
+  navigation.navigate('PostCommentScreen',{ postId:id, postAuthorId:author.id})
 }
   return (
     <Box marginTop="s16">
