@@ -5,6 +5,7 @@ import { ProfileAvatar } from '../../../../components/ProfileAvatar/ProfileAvata
 import { usePostCommentRemove } from '../../../../domain/PostComment/useCases/usePostCommentRemove'
 import { Alert, Pressable } from 'react-native'
 import { postCommentService } from '../../../../domain/PostComment/PostCommentService'
+import { useToast } from '../../../../../src/services/toast/useToast'
 
 interface Props {
     postComment: PostComment,
@@ -13,7 +14,11 @@ interface Props {
     onRemoveComment:() => void
 }
 export function PostCommentItem({ postComment ,onRemoveComment, postAuthorId,userId}: Props) {
-    const { mutate } = usePostCommentRemove({onSuccess:onRemoveComment})
+   const {showToast} = useToast()
+    const { mutate } = usePostCommentRemove({onSuccess: ()=> {
+        onRemoveComment()
+        showToast({message:'Comentario deletado'})
+    }})
     const isAllowToDelete = postCommentService.isAllowToDelete(postComment,userId,postAuthorId)
 
     function confirmRemove() {
