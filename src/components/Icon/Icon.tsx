@@ -30,6 +30,7 @@ import { SettingsIcon } from '../../assets/icons/SettingsIcon';
 import { TrashIcon } from '../../assets/icons/TrashIcon';
 import { CheckRoundIcon } from '../../assets/icons/CheckRoundIcon';
 import { MessageRoundIcon } from '../../assets/icons/MessageRoundIcon';
+import { ErrorRoundIcon } from '../../assets/icons/ErrorRoundIcon';
 
 export interface IconBase {
     size?:number,
@@ -67,6 +68,7 @@ const iconRegistry = {
     chat: ChatIcon,
     chatOn: ChatOnIcon,
     check: CheckIcon,
+      errorRound: ErrorRoundIcon,
     comment: CommentIcon,
     chevronRight: ChevronRightIcon,
     eyeOn: EyeOnIcon,
