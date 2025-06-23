@@ -11,16 +11,16 @@ const MAX_WIDTH = Dimensions.get('screen').width *0.9
 
 export function Toast(){
 
-    const {toast,hiddenToast} = useToast()
+    const {toast,hideToast: hideToast} = useToast()
 
     useEffect(()=> {
         if(toast){
             setTimeout(()=>{
-                hiddenToast()
+                hideToast()
             },3000)
         }
 
-    },[hiddenToast, toast])
+    },[hideToast, toast])
 
     if(!toast) {
         return null

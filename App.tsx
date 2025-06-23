@@ -5,7 +5,7 @@ import {theme} from './src/theme/theme';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Router } from './src/routes/Routes';
 import { Toast } from './src/components/Toast/Toast';
-import { ToastProvider } from './src/services/toast/useToast';
+import { ToastProvider } from './src/services/toast/Providers/ToastProvider';
 
 function App(): React.JSX.Element {
   return (
