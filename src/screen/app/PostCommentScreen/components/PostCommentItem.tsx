@@ -17,7 +17,7 @@ export function PostCommentItem({ postComment ,onRemoveComment, postAuthorId,use
    const {showToast} = useToastService()
     const { mutate } = usePostCommentRemove({onSuccess: ()=> {
         onRemoveComment()
-        showToast({message:'Comentario deletado',position:'bottom', type:'error', duration:5000}) // passando as propriedades do toast
+        showToast({message:'Comentario deletado',position:'bottom', type:'success', duration:5000}) // passando as propriedades do toast
     }})
     const isAllowToDelete = postCommentService.isAllowToDelete(postComment,userId,postAuthorId)
 
