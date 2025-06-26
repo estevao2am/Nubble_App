@@ -16,9 +16,10 @@ export function useUserGetById(id: number) {
 //   const [error, setError] = useState<boolean | null>(null);
 //   const [loading, setLoading] = useState(false);
 
-const {data,isLoading, isError} = useQuery({
+const {data,isLoading, isError,refetch,isFetching} = useQuery({
   queryKey:[QueryKeys.UserGetById,id], // passando o id para fazer o cache e troca de cache
-  queryFn:()=> userService.getById(id)
+  queryFn:()=> userService.getById(id),
+  staleTime:1000 * 30 // 10 seconds
 })
 
 //   const getUserById = useCallback(async () => {
@@ -43,5 +44,7 @@ const {data,isLoading, isError} = useQuery({
     user:data,
     isError,
     isLoading,
+    refetch,
+    isFetching
   };
 }

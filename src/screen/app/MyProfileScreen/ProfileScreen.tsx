@@ -7,18 +7,24 @@ import { ProfileAvatar } from '../../../components/ProfileAvatar/ProfileAvatar';
 import { useUserGetById } from '../../../domain/User/useUserGetById';
 import { AppScreenProps } from '../../../routes/navigationType';
 import { Screen } from '../../../screen/Screen';
+import { ScrollView, RefreshControl } from 'react-native';
 
 export function ProfileScreen({route}: AppScreenProps<'ProfileScreen'>) {
   const userId = route.params.userId;
 
-  const {isLoading, isError, user} = useUserGetById(userId);
+  const {isLoading, isError, user,refetch,isFetching} = useUserGetById(userId);
 
   return (
-    <Screen canGoBack>
+    <Screen canGoBack flex={1}>
       {isLoading && <ActivityIndicator color={'primary'} />}
       {isError && <Text> error ao carregar perfil do usuário</Text>}
       {user && (
-        <Box alignItems="center">
+        <ScrollView 
+        style={{flex:1}}
+        refreshControl ={<RefreshControl refreshing={isFetching} onRefresh={refetch}/>}
+
+        >
+        <Box alignItems="center" flex={1}>
           <ProfileAvatar
             imageURL={user.profileUrl}
             size={64}
@@ -29,6 +35,7 @@ export function ProfileScreen({route}: AppScreenProps<'ProfileScreen'>) {
           </Text>
           <Text>@{user.username}</Text>
         </Box>
+        </ScrollView>
       )}
     </Screen>
   );
