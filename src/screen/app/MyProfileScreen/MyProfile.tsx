@@ -8,7 +8,7 @@ import {  Screen,  } from '../../Screen';
 export function MyProfile(){
     return (
         <Screen>
-            <Text preset="headingLarge">My Profile</Text>
+            <Text preset="headingSmall">Create Post</Text>
         </Screen>
     )
 }
