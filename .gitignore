@@ -74,3 +74,5 @@ readme2.md
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.vscode/.react/

@@ -1,11 +1,12 @@
-import { usePaginatedList } from "../../../infra/hooks/usePaginatedList";
+import { UsePaginatedList } from "../../../infra/hooks/usePaginatedList";
 import { Post } from '../postTypes';
 import { postService } from "../postService";
+import { QueryKeys } from "../.../../../../infra/infraTypes";
 
 
 
 
 export function usePostList (){
-   return usePaginatedList<Post>(postService.getList)
+   return UsePaginatedList<Post>([QueryKeys.PostList],postService.getList)
 
 }

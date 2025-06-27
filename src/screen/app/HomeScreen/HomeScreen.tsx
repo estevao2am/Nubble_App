@@ -14,7 +14,7 @@ import { useScrollToTop } from '@react-navigation/native';
 
 export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
  
-const {list:postList,error,loading,refresh,fetchNextPage} = usePostList()
+const {list:postList,isError,isLoading,refresh,fetchNextPage} = usePostList()
 
 // go to top function after must be used in the flatList area
 const flatListRef = React.useRef<FlatList<Post>>(null)
@@ -37,11 +37,11 @@ useScrollToTop(flatListRef)
         onEndReached={fetchNextPage} // função que é chamada quando chegar no limite da pagina
         onEndReachedThreshold={0.5}// percemtagem do scrool
         contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
-        refreshing={loading}
+        refreshing={isLoading}
         ListHeaderComponent={<HomeHeader/>}
-                refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh}/> }
+                refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refresh}/> }
 
-        ListEmptyComponent={<HomeEmpty refetch={refresh} error={error} loading={loading}/>}
+        ListEmptyComponent={<HomeEmpty refetch={refresh} error={isError} loading={isLoading}/>}
     />
 
   </Screen>
