@@ -6,7 +6,7 @@ import { AuthStack } from './AuthStack';
 // Chamando as nossas rotas: Rotas autenticadas e não autenticadas
 
 export function Router() {
-  const authenticated = true;
+  const authenticated = false;
   console.log(authenticated)
 
   return (

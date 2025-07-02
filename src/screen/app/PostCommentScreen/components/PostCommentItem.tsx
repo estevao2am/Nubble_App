@@ -10,14 +10,14 @@ import { useToastService } from '../../../../../src/services/toast/useToast'
 interface Props {
     postComment: PostComment,
     userId:number;
-    postAuthorId:number
-    onRemoveComment:() => void
+    postAuthorId:number,
+    postId :number
 }
-export function PostCommentItem({ postComment ,onRemoveComment, postAuthorId,userId}: Props) {
+export function PostCommentItem({ postComment ,postId, postAuthorId,userId}: Props) {
    const {showToast} = useToastService()
-    const { mutate } = usePostCommentRemove({onSuccess: ()=> {
-        onRemoveComment()
-        showToast({message:'Comentario deletado',position:'bottom', type:'success', duration:5000}) // passando as propriedades do toast
+    const { mutate } = usePostCommentRemove(postId,{onSuccess: ()=> {
+        
+        showToast({message:'Comentario deletado', type:'success', duration:5000}) // passando as propriedades do toast
     }})
     const isAllowToDelete = postCommentService.isAllowToDelete(postComment,userId,postAuthorId)
 

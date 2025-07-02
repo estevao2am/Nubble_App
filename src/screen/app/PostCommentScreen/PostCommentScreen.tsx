@@ -13,7 +13,7 @@ import { useUser } from '../../../domain/Auth/hooks/useUser';
 export function PostCommentScreen ({route}:AppScreenProps<'PostCommentScreen'>){
 
 const postId = route.params.postId; // eu recebo este id la na definicao do meu routes ,como paramenr´trp
-const {list,fetchNextPage,hasNextPage,refresh} = usePostCommentList(postId)
+const {list,fetchNextPage,hasNextPage} = usePostCommentList(postId)
 
 const {id} = useUser()
 const postAuthorId = route.params.postAuthorId
@@ -21,7 +21,7 @@ const postAuthorId = route.params.postAuthorId
 const {bottom} = useAppSafeArea()
  function renderItem({item}:ListRenderItemInfo<PostComment>){
     return (
-    <PostCommentItem postComment={item} onRemoveComment={refresh} userId={id} postAuthorId={postAuthorId}/>
+    <PostCommentItem postComment={item} postId={postId} userId={id} postAuthorId={postAuthorId}/>
     ) 
     }
 
