@@ -8,6 +8,9 @@ import { LoginSchema, loginSchema} from './loginSchema';
 import { FormPasswordInput } from '../../../components/form/FormPasswordInput';
 import { FormTextInput } from '../../../components/form/FormTextInput';
 import { AuthScreenProps } from '../../../routes/navigationType';
+import { useAuthSignIn } from '../../../domain/Auth/useCases/useAuthSignIn';
+import { useToastService } from '../../../services/toast/useToast';
+import { onlineManager } from '@tanstack/react-query';
 
 // type LoginFormType = {
 //   email:string;
@@ -22,7 +25,10 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   // const [email, setEmail] = useState('')
   // const [password,setPassword] = useState('') 
   // const [emailErrorMessage, setEmailErrorMensage] = useState('')
-
+ const {showToast} = useToastService();
+  const {isLoading, signIn} = useAuthSignIn({
+    onError: message => showToast({message, type: 'error'}),
+  });
 
 const {control,formState, handleSubmit} = useForm<LoginSchema>({
   resolver:zodResolver(loginSchema),
@@ -34,7 +40,9 @@ const {control,formState, handleSubmit} = useForm<LoginSchema>({
 })
   
 function submitForm({email,password}:LoginSchema){
-  Alert.alert(`E-mail: ${email} password: ${password}`)
+  // Alert.alert(`E-mail: ${email} password: ${password}`)
+  signIn({email,password})
+
 }
 
 
@@ -50,7 +58,7 @@ function submitForm({email,password}:LoginSchema){
   return (
     <Screen scrollable>
       <Text marginBottom="s8" preset="headingLarge">
-        Olá{' '}
+        Olá
       </Text>
       <Text marginBottom="s40" preset="paragraphLarge">
         Digite o seu e-mail e senha para entrar
@@ -95,6 +103,7 @@ function submitForm({email,password}:LoginSchema){
       </Text>
 
       <Button  
+      loading={isLoading}
       disabled={!formState.isValid}
       onPress={handleSubmit(submitForm)} 
       marginTop="s48"
