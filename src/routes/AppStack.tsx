@@ -12,6 +12,7 @@ export type AppStackParamList = {
    // HomeScreen: undefined,
    AppTabNavigator: NavigatorScreenParams<AppTabBottomTabParamList>
     SettingScreen:undefined,
+        MyProfile : undefined
     PostCommentScreen:{
         postId:number,
         postAuthorId:number,

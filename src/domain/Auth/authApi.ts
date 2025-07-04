@@ -14,7 +14,7 @@ async function signIn(
 }
 
 async function signOut(): Promise<string> {
-  const response = await api.get<string>('profile/logout');
+  const response = await api.get<string>('auth/profile/logout');
   return response.data;
 }
 
