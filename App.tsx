@@ -7,12 +7,14 @@ import { Router } from './src/routes/Routes';
 import { Toast } from './src/components/Toast/Toast';
 import { ToastProvider } from './src/services/toast/Providers/ToastProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthCredentialsProvider } from './src/services/authCredentials/Providers/AuthCredentialsProvider';
 
 const queryClient = new QueryClient()
 
 function App(): React.JSX.Element {
 
   return (
+    <AuthCredentialsProvider>
     <QueryClientProvider client={queryClient}>
     <SafeAreaProvider>
     <ThemeProvider theme={theme}>
@@ -24,6 +26,7 @@ function App(): React.JSX.Element {
     </ThemeProvider>
     </SafeAreaProvider>
     </QueryClientProvider>
+    </AuthCredentialsProvider>
   );
 }
 
