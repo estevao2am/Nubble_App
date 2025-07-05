@@ -1,7 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import React from 'react'
 import { AuthCredentialsService } from "../authCredentialsTypes";
 import { AuthCredentials } from "../../../domain/Auth/authTypes";
+import { authCredentialsStorage } from "../authCredentialsStorage";
+import { authService } from "../../../domain/Auth/authService";
 
 
 export const AuthCredentialsContext = createContext<AuthCredentialsService>({
@@ -16,16 +18,42 @@ export function AuthCredentialsProvider({
 }: React.PropsWithChildren<{}>) {
   const [authCredentials, setAuthCredentials] =
     useState<AuthCredentials | null>(null);
-  const [isLoading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading ] = useState(true);
+
+
+
+  useEffect(() => {
+//authCredentialsStorage.remove() para reover o token dev
+    startAuthCredentials();
+  }, []);
+
+  async function startAuthCredentials() {
+    try {
+       await new Promise(resolve => setTimeout(resolve, 2000, ''));
+      const ac = await authCredentialsStorage.get();
+      if (ac) {
+        authService.updateToken(ac.token);
+        setAuthCredentials(ac);
+      }
+    } catch (error) {
+      // TODO: handle error
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
 
   async function saveCredentials(ac: AuthCredentials): Promise<void> {
-    // TODO: persist
-
+    authService.updateToken(ac.token);
+    authCredentialsStorage.set(ac);
     setAuthCredentials(ac);
+
+
   }
 
   async function removeCredentials(): Promise<void> {
-    // TODO: persist
+    authService.removeToken();
+    authCredentialsStorage.remove();
     setAuthCredentials(null);
   }
 
