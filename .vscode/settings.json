@@ -2,6 +2,7 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
         "authcredentials",
-        "hiddentoast"
+        "hiddentoast",
+        "MMKV"
     ]
 }

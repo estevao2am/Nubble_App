@@ -23,13 +23,13 @@ export function AuthCredentialsProvider({
 
 
   useEffect(() => {
-//authCredentialsStorage.remove() para reover o token dev
+//authCredentialsStorage.remove()
     startAuthCredentials();
   }, []);
 
   async function startAuthCredentials() {
     try {
-       await new Promise(resolve => setTimeout(resolve, 2000, ''));
+       await new Promise(resolve => setTimeout(resolve, 2000, '')); // para dar uma delay
       const ac = await authCredentialsStorage.get();
       if (ac) {
         authService.updateToken(ac.token);

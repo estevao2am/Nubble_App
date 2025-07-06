@@ -18,7 +18,7 @@ export function Router() {
         backgroundColor="background"
         justifyContent="center"
         alignItems="center">
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color='primary' />
       </Box>
     )
   }
