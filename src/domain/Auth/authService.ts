@@ -1,7 +1,7 @@
 import { api } from "../../api/apiConfig";
 import { authAdapter } from "./authAdapter";
 import { authApi } from "./authApi";
-import { AuthCredentials } from "./authTypes";
+import { AuthCredentials, SignUpData } from "./authTypes";
 
 async function signIn(
   email: string,
@@ -20,6 +20,21 @@ async function signOut(): Promise<string> {
   return message;
 }
 
+async function signUp(signUpData:SignUpData):Promise<void>{
+  await authApi.signUp(signUpData)
+}
+
+async function isUsernameAvailable(username:string):Promise<boolean>{
+  const {isAvailable} = await authApi.isUsernameAvailable({username})
+
+  return isAvailable
+}
+
+async function isEmailAvailable (email:string):Promise<boolean>{
+  const {isAvailable} = await authApi.isEmailAvailable({email})
+  return isAvailable
+}
+
 // User Token
 
 function updateToken(token:string) {
@@ -34,5 +49,8 @@ export const authService = {
   signIn,
   signOut,
   updateToken,
-  removeToken
+  removeToken,
+  signUp,
+  isUsernameAvailable,
+  isEmailAvailable
 };

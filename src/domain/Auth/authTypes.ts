@@ -20,3 +20,27 @@ export interface SignInData {
     email?:string,
     password:string
 }
+
+// create user account API data
+export interface SignUpDataAPI {
+    firstName:string,
+    lastName:string,
+    username:string,
+    email:string,
+    password:string
+}
+
+// create user account application data
+export interface SignUpData {
+    firstName:string,
+    lastName:string,
+    username:string,
+    email:string,
+    password:string
+}
+
+// validacao de campos , email, username la na api
+export interface FieldIsAvailableAPI {
+    message:string;
+    isAvailable:boolean
+}

@@ -11,6 +11,8 @@ import { FormPasswordInput } from '../../../components/form/FormPasswordInput';
 import {signUpSchema,SignUpSchema} from './signUpSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthScreenProps } from '../../../routes/navigationType';
+import { useAuthSignUp } from '../../../domain/Auth/useCases/useAuthSignUp';
+import { AuthStackParamList } from 'src/routes/AuthStack';
 
 // type SignUpFormType = {
 //   fullName:string;
@@ -19,16 +21,29 @@ import { AuthScreenProps } from '../../../routes/navigationType';
 //   password:string;
 
 // }
-
+const resetParams : AuthStackParamList['SuccessScreen'] = {
+     title:'Sua conta foi criada com sucesso.',
+          description:'Agora é só fazer o login na plataforma',
+          icon:{
+            name:'checkRound',
+            color:'success'
+}}
 
 export function SignUpScreen({navigation}:AuthScreenProps<'SignUpScreen'>) {
 
   const {reset} = useResetNavigationSuccess()
+  const {signUp,isLoading} = useAuthSignUp({
+    // Chamando o usecase do create account e depois dar o reset
+    onSuccess: () => {
+         reset(resetParams);
+    }
+  });
 
 const { control,handleSubmit,formState} = useForm<SignUpSchema>({
   resolver: zodResolver(signUpSchema),
   defaultValues:{
-    fullName:'',
+    lastName:'',
+    firstName:'',
     email:'',
     password:'',
     username:'',
@@ -37,17 +52,10 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
 })
 
     function submitForm(formValues:SignUpSchema){
-      console.log(formValues)
+      // console.log(formValues) Login function
+      signUp(formValues)
 
-      reset({
-        
-          title:'Sua conta foi criada com sucesso.',
-          description:'Agora é só fazer o login na plataforma',
-          icon:{
-            name:'checkRound',
-            color:'success'
-          }
-        })
+   
       }
          
   return (
@@ -67,9 +75,16 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
 
 <FormTextInput
   control={control}
-  name='fullName'
+  name='firstName'
   label="Nome completo"
  placeholder="Digite seu nome"
+ boxProps={{marginBottom: 's20'}}
+/>
+<FormTextInput
+  control={control}
+  name='lastName'
+  label="Sobrenome"
+ placeholder="Digite o seu sobrenome"
  boxProps={{marginBottom: 's20'}}
 />
 
@@ -100,6 +115,7 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
 
       
 <Button
+loading={isLoading}
         disabled={!formState.isValid}
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
