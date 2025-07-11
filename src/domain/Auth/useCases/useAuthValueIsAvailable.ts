@@ -4,30 +4,62 @@ import { authService } from "../authService"
 import { useDebounce } from '../../../infra/hooks/useDebounce';
 
 
-interface Params {
-    username:string;
-    enabled:boolean
+interface Param<T extends {length: number}> {
+  value: T;
+  enabled: boolean;
+  queryKey: QueryKeys;
+  isAvailableFunc: (value: T) => Promise<boolean>;
 }
 
+function useAuthIsValueAvailable<T extends {length: number}>({
+  value,
+  enabled,
+  isAvailableFunc,
+  queryKey,
+}: Param<T>) {
+  const debouncedValue = useDebounce(value, 1500);
 
-export function useAuthIsUsernameAvailable({username,enabled}:Params){
-    const debouncedUsername = useDebounce(username, 1500)
-    const {data, isFetching} = useQuery({
-        queryKey:[QueryKeys.IsUserNameAvailable, debouncedUsername],
-        queryFn: () => authService.isEmailAvailable(debouncedUsername),
-        retry:false,
-        staleTime:20000,
-        enabled:enabled && debouncedUsername.length>0  // precisa ser maior que o 0
-    }) 
+  const {data, isFetching} = useQuery({
+    queryKey: [queryKey, debouncedValue],
+    queryFn: () => isAvailableFunc(debouncedValue),
+    retry: false,
+    staleTime: 20000,
+    enabled: enabled && debouncedValue.length > 0,
+  });
+  const isDebouncing = debouncedValue !== value;
 
-    const isDebouncing = debouncedUsername !==username;
-
-    return {
-      //
-      //   isAvailable: !!data,
-      isUnavailable:data ==false,  
-      isFetching: isFetching || isDebouncing
-    }
+  return {
+    // isAvailable: !!data,
+    isUnavailable: data === false,
+    isFetching: isFetching || isDebouncing,
+  };
 }
 
-// filtros de validacao de dados disponiveis
+export function useAuthIsUsernameAvailable({
+  username,
+  enabled,
+}: {
+  username: string;
+  enabled: boolean;
+}) {
+  return useAuthIsValueAvailable({
+    value: username,
+    enabled,
+    isAvailableFunc: authService.isUsernameAvailable,
+    queryKey: QueryKeys.IsUserNameAvailable,
+  });
+}
+export function useAuthIsEmailAvailable({
+  email,
+  enabled,
+}: {
+  email: string;
+  enabled: boolean;
+}) {
+  return useAuthIsValueAvailable({
+    value: email,
+    enabled,
+    isAvailableFunc: authService.isEmailAvailable,
+    queryKey: QueryKeys.IsUserEmailAvailable,
+  });
+}

@@ -1,4 +1,3 @@
-
 import { api } from '../../api/apiConfig';
 import { UserAPI } from '../User/userTypes';
 import {AuthCredentialsAPI, FieldIsAvailableAPI, SignUpDataAPI} from './authTypes';
@@ -28,7 +27,7 @@ return response.data
 async function isUsernameAvailable(params: {
   username:string
 }):Promise<FieldIsAvailableAPI>{
-  const response = await api.get<FieldIsAvailableAPI>('validate-username', {
+  const response = await api.get<FieldIsAvailableAPI>('/auth/validate-username', {
     params,
   });
   return response.data
@@ -37,7 +36,7 @@ async function isUsernameAvailable(params: {
 async function isEmailAvailable(params: {
   email:string
 }): Promise<FieldIsAvailableAPI> {
-  const response = await api.get<FieldIsAvailableAPI>('validate-email',{
+  const response = await api.get<FieldIsAvailableAPI>('auth/validate-email',{
     params
   })
 

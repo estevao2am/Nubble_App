@@ -11,7 +11,7 @@ import {signUpSchema,SignUpSchema} from './signUpSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthScreenProps } from '../../../routes/navigationType';
 import { useAuthSignUp } from '../../../domain/Auth/useCases/useAuthSignUp';
-import { AuthStackParamList } from 'src/routes/AuthStack';
+import { AuthStackParamList } from '../../../routes/AuthStack';
 import { useAuthIsUsernameAvailable } from '../../../domain/Auth/useCases/useAuthValueIsAvailable';
 import { ActivityIndicator } from '../../../components/ActivityIndicator/ActivityIndicator';
 
@@ -76,17 +76,21 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
       </Text>
 
 
-<FormTextInput
-  control={control}
-  name='username'
-  label='Seu username'
-  placeholder='@'
-  errorMessage={usernameQuery.isUnavailable ?'Username indisponivel':undefined}
-  boxProps={{mb:'s20'}}
-  RightComponent={
-    usernameQuery.isFetching ? ( <ActivityIndicator size='small' color='primary'/>):undefined
-  }
-/>
+ <FormTextInput
+        control={control}
+        name="username"
+        label="Seu username"
+        placeholder="@"
+        errorMessage={
+          usernameQuery.isUnavailable ? 'username indisponível' : undefined
+        }
+        boxProps={{mb: 's20'}}
+        RightComponent={
+          usernameQuery.isFetching ? (
+            <ActivityIndicator size="small" color='primary' />
+          ) : undefined
+        }
+      />
 
 <FormTextInput
   control={control}
@@ -117,12 +121,11 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
  label='E-mail'
  boxProps={{marginBottom: 's20'}}
 
-/>
+/> 
 
 <FormPasswordInput 
   control={control}
   name='password'
-
   label='Senha'
   placeholder='Digite sua senha'
   boxProps={{mb:"s48"}}
@@ -131,7 +134,9 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
       
 <Button
 loading={isLoading}
-        disabled={!formState.isValid || usernameQuery.isFetching || usernameQuery.isUnavailable}
+        disabled={!formState.isValid || 
+          usernameQuery.isFetching || 
+          usernameQuery.isUnavailable}
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
       />
