@@ -4,7 +4,7 @@ import { TextInput, TextInputProps } from "../TextInput/TextInput";
 
 
 export function FormTextInput<FormType extends FieldValues >({
-    name,rules,control,...textInputProps}: TextInputProps & UseControllerProps<FormType>) {
+    name,rules,control,errorMessage,...textInputProps}: TextInputProps & UseControllerProps<FormType>) {
     return(
    
         <Controller 
@@ -15,7 +15,7 @@ export function FormTextInput<FormType extends FieldValues >({
              <TextInput
                     value={field.value}
                     onChangeText={field.onChange}
-                      errorMessage={fieldState.error?.message}
+                      errorMessage={fieldState.error?.message || errorMessage}
                     //   label="Nome completp"
                     //   placeholder="Digite seu nome"
                     //   boxProps={{marginBottom: 's20'}}

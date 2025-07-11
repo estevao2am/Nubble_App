@@ -3,7 +3,6 @@ import React from 'react';
 import {Screen} from '../../Screen';
 import {Text} from '../../../components/Text/Text';
 import { Button } from '../../../components/Button/Button';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useResetNavigationSuccess } from '../../../components/hooks/useResetNavigationSuccess';
 import { useForm } from 'react-hook-form';
 import { FormTextInput } from '../../../components/form/FormTextInput';
@@ -13,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthScreenProps } from '../../../routes/navigationType';
 import { useAuthSignUp } from '../../../domain/Auth/useCases/useAuthSignUp';
 import { AuthStackParamList } from 'src/routes/AuthStack';
+import { useAuthIsUsernameAvailable } from '../../../domain/Auth/useCases/useAuthValueIsAvailable';
+import { ActivityIndicator } from '../../../components/ActivityIndicator/ActivityIndicator';
 
 // type SignUpFormType = {
 //   fullName:string;
@@ -39,7 +40,7 @@ export function SignUpScreen({navigation}:AuthScreenProps<'SignUpScreen'>) {
     }
   });
 
-const { control,handleSubmit,formState} = useForm<SignUpSchema>({
+const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSchema>({
   resolver: zodResolver(signUpSchema),
   defaultValues:{
     lastName:'',
@@ -57,6 +58,16 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
 
    
       }
+
+      // implement user username validation when digit
+    const username = watch('username');
+  const usernameState = getFieldState('username');
+  const usernameIsValid = !usernameState.invalid && usernameState.isDirty;
+  const usernameQuery = useAuthIsUsernameAvailable({
+    username,
+    enabled: usernameIsValid,
+  });
+
          
   return (
     <Screen canGoBack  scrollable>
@@ -70,7 +81,11 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
   name='username'
   label='Seu username'
   placeholder='@'
+  errorMessage={usernameQuery.isUnavailable ?'Username indisponivel':undefined}
   boxProps={{mb:'s20'}}
+  RightComponent={
+    usernameQuery.isFetching ? ( <ActivityIndicator size='small' color='primary'/>):undefined
+  }
 />
 
 <FormTextInput
@@ -116,7 +131,7 @@ const { control,handleSubmit,formState} = useForm<SignUpSchema>({
       
 <Button
 loading={isLoading}
-        disabled={!formState.isValid}
+        disabled={!formState.isValid || usernameQuery.isFetching || usernameQuery.isUnavailable}
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
       />
