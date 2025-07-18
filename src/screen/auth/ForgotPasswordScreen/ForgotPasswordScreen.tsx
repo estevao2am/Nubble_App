@@ -7,11 +7,31 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormTextInput } from "../../../components/form/FormTextInput";
 import { AuthScreenProps } from "../../../routes/navigationType";
+import { useAuthRequestNewPassword } from "../../../domain/Auth/useCases/useAuthRequestNewPassword";
+import { AuthStackParamList } from "../../../routes/AuthStack";
+import { useToast, useToastService } from "../../../services/toast/useToast";
 
+
+const resetParam : AuthStackParamList['SuccessScreen'] = {
+
+            title: `Enviamos as instrunções ${'\n'}para seu e-mail`,
+            description:'Click no link enviado no seu e-email para ecuperar sua senha',
+            icon:{
+                name:'messageRound',
+                color:'primary'
+            }
+        }
 
 
 export function ForgotPasswordScreen ({navigation}:AuthScreenProps<'ForgotPasswordScreen'>){
     const {reset} = useResetNavigationSuccess()
+    const {showToast} = useToastService()
+
+const {requestNewPAssword,isLoading} = useAuthRequestNewPassword({
+    onSuccess:() => reset(resetParam),
+    onError: (message) => showToast({message, type:'error'})
+})
+
 
 const {control,handleSubmit,formState} = useForm<ForgotPasswordSchema>({
     resolver:zodResolver(forgotPasswordSchema),
@@ -22,15 +42,8 @@ const {control,handleSubmit,formState} = useForm<ForgotPasswordSchema>({
 })
 
     function submitForm(values:ForgotPasswordSchema){
+        requestNewPAssword(values.email)
         console.log(values)
-        reset({
-            title: `Enviamos as instrunções ${'\n'}para seu e-mail`,
-            description:'Click no link enviado no seu e-email para ecuperar sua senha',
-            icon:{
-                name:'messageRound',
-                color:'primary'
-            }
-        })
 
        
     }
@@ -46,7 +59,8 @@ const {control,handleSubmit,formState} = useForm<ForgotPasswordSchema>({
                  boxProps={{mb:"s40"}}
                />
                
-               <Button  
+     <Button 
+     loading={isLoading} 
       disabled={!formState.isValid}
       onPress={handleSubmit(submitForm)} 
       title="Entrar"

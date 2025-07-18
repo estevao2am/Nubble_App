@@ -14,6 +14,7 @@ import { useAuthSignUp } from '../../../domain/Auth/useCases/useAuthSignUp';
 import { AuthStackParamList } from '../../../routes/AuthStack';
 import { useAuthIsUsernameAvailable } from '../../../domain/Auth/useCases/useAuthValueIsAvailable';
 import { ActivityIndicator } from '../../../components/ActivityIndicator/ActivityIndicator';
+import { useAsyncValidation } from './useAsyncValidation';
 
 // type SignUpFormType = {
 //   fullName:string;
@@ -60,13 +61,11 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
       }
 
       // implement user username validation when digit
-    const username = watch('username');
-  const usernameState = getFieldState('username');
-  const usernameIsValid = !usernameState.invalid && usernameState.isDirty;
-  const usernameQuery = useAuthIsUsernameAvailable({
-    username,
-    enabled: usernameIsValid,
+  const {usernameValidation, emailValidation} = useAsyncValidation({
+    watch,
+    getFieldState,
   });
+
 
          
   return (
@@ -81,12 +80,11 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
         name="username"
         label="Seu username"
         placeholder="@"
-        errorMessage={
-          usernameQuery.isUnavailable ? 'username indisponível' : undefined
-        }
+              errorMessage={usernameValidation.errorMessage}
+
         boxProps={{mb: 's20'}}
         RightComponent={
-          usernameQuery.isFetching ? (
+          usernameValidation.isFetching ? (
             <ActivityIndicator size="small" color='primary' />
           ) : undefined
         }
@@ -117,6 +115,12 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
   //     message:'E-mail invalido'
   //   }
   // }}  label="E-mail"
+  errorMessage={emailValidation.errorMessage}
+        RightComponent={
+          emailValidation.isFetching ? (
+            <ActivityIndicator size="small" color={'primary'} />
+          ) : undefined
+        }
  placeholder="Digite seu e-mail"
  label='E-mail'
  boxProps={{marginBottom: 's20'}}
@@ -135,8 +139,10 @@ const { control,handleSubmit,formState,watch,getFieldState} = useForm<SignUpSche
 <Button
 loading={isLoading}
         disabled={!formState.isValid || 
-          usernameQuery.isFetching || 
-          usernameQuery.isUnavailable}
+  usernameValidation.notReady ||
+          emailValidation.notReady
+        }
+
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
       />
